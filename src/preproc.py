@@ -48,9 +48,9 @@ for col in data:
     if not data[col].nunique() > 1:
         cols_to_drop.append(col)
 
-data.drop(columns=cols_to_drop, inplace=True)
-print("Removed " + str(len(cols_to_drop)) +
-      " columns with no variation in its values.")
+data.drop(columns=cols_to_drop,inplace=True)
+print("Removed " + str(len(cols_to_drop)) +                  #no. of cols removed
+      " columns with no variation in its values.")       
 
 # Drop the rows that have at least one NaN value in it
 old_num_rows = data.shape[0]
