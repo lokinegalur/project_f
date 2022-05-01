@@ -37,6 +37,7 @@ TP = results[0][0]
 FN = results[0][1]
 FP = results[1][0]
 TN = results[1][1]
+print('Confusion matrix')
 print(' ','Yes','No')
 print('Yes',TP,FN)
 print('No',FP,TN)
@@ -55,6 +56,12 @@ print('Recall : ',recall)
 
 precison = TP/(TP+FP)
 print('Precision : ',precison)
+
+#error rate: error classfication out of all classified
+err_rate = (FP+FN)/(TP+FN+FP+TN)
+print('Error rate : ',err_rate)
+
+
 
 
 
