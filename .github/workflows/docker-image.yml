@@ -1,18 +1,34 @@
-name: Docker Image Build and push to GCR
+# name: Docker Image Build and push to GCR
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+
+#   build:
+
+#     runs-on: docker-latest
+
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Build the Docker image
+#       run: docker build . --file Dockerfile --tag test:$(date +%s)
+
+name: Python CI/CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [master]
   pull_request:
-    branches: [ "main" ]
+    branches: [master]
 
 jobs:
-
   build:
-
-    runs-on: docker-latest
-
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag test:$(date +%s)
+      - uses: actions/checkout@v3
+      - name: Build the image
+        run: docker build . --file Dockerfile --tag test:${{ github.sha }}
