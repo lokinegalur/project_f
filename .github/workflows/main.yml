@@ -16,7 +16,7 @@ jobs:
         with:
           gcloud_service_key: "${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}"
           registry: gcr.io
-          project_id: pro-chesta
+          project_id: prj-diameterhealth-working
           image_name: hello-world-by-push-to-gcr-2
           image_tag: test-${{ github.sha }}, ${{ github.sha }}
           dockerfile: Dockerfile
