@@ -1,15 +1,24 @@
-name: Python CI/CD
-
+name: build-push-gcr
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  build-and-push-to-gcr-without-gcloud-auth-action:
+    name: Build & push - without gcloud auth action
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build the image
-        run: docker build . --file Dockerfile --tag test:${{ github.sha }}
+      - name: Building and pushing the image
+        uses: ./
+        # uses: RafikFarhad/push-to-gcr-github-action@v5-beta # <- use this on your workflow
+        with:
+          gcloud_service_key: "${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}"
+          registry: gcr.io
+          project_id: pro-chesta
+          image_name: hello-world-by-push-to-gcr-2
+          image_tag: test-${{ github.sha }}, ${{ github.sha }}
+          dockerfile: ./test/Dockerfile.test
+          context: ./test
+          target: build
