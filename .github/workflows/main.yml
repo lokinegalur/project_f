@@ -20,5 +20,5 @@ jobs:
           image_name: hello-world-by-push-to-gcr-2
           image_tag: test-${{ github.sha }}, ${{ github.sha }}
           dockerfile: Dockerfile
-          context: .
+          context: ..
           target: build
