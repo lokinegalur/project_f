@@ -5,26 +5,31 @@ on:
   pull_request:
     branches: [main]
 jobs:
- # example with gcloud service account key
   build-and-push-to-gcr-service-account:
     name: Build & push - with service account
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: test
+      PROJECT_ID: prj-diameterhealth-working
     steps:
-      - uses: actions/checkout@v3
-      - name: Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v0
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: auth
+        uses: google-github-actions/setup-gcloud@master
         with:
-          credentials_json: '${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}'
-      - name: Building and pushing the image
-        # uses: ./
-        uses: RafikFarhad/push-to-gcr-github-action@v5-beta # <- use this on your workflow
-        with:
-          # gcloud_service_key: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }} # <- not needed when used with google-github-actions/auth@v0
-          registry: gcr.io
-          project_id: pro-chesta
-          image_name: test-image
-          image_tag: test-${{ github.sha }}, ${{ github.sha }}
-          dockerfile: Dockerfile
-          context: .
-          target: build
+          service_account_key: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
+          project_id: ${{ env.PROJECT_ID }}
+          export_default_credentials: true
+      
+      - name: build image
+        run: docker build -t $IMAGE_NAME:latest
+      
+      - name: configure docker client
+        run: |-
+          gcloud auth configure-docker --quiet
+      
+      - name: push to gcr
+        run: |-
+          docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+          docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
