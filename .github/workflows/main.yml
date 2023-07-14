@@ -15,10 +15,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: auth
-        uses: google-github-actions/setup-gcloud@v1
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
         with:
-          credentials_json: '${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}'
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
           # project_id: ${{ env.PROJECT_ID }}
           # export_default_credentials: true
       
