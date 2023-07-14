@@ -25,6 +25,6 @@ jobs:
           project_id: pro-chesta
           image_name: test-image
           image_tag: test-${{ github.sha }}, ${{ github.sha }}
-          dockerfile: ./Dockerfile
+          dockerfile: Dockerfile
           context: .
           target: build
