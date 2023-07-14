@@ -4,7 +4,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-builds:
+jobs:
  # example with gcloud service account key
   build-and-push-to-gcr-service-account:
     name: Build & push - with service account
