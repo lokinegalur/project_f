@@ -1,3 +1,10 @@
+name: build-push-gcr
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+builds:
  # example with gcloud service account key
   build-and-push-to-gcr-service-account:
     name: Build & push - with service account
